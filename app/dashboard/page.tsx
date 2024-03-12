@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 function DashBoard() {
     const [activeTab, setActiveTab] = useState('Your Projects');
-    const [linePosition, setLinePosition] = useState(67);
+    const [linePosition, setLinePosition] = useState(114);
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpenNavbar = () => {
@@ -54,7 +54,7 @@ function DashBoard() {
                             </li>
                             <div
                                 className={`absolute bottom-0 left-0 h-1 bg-primaryv rounded-xl transition-transform transform translate-x-0`}
-                                style={{ width: `${activeTab === 'Your Projects' ? '20%' : activeTab === 'Liked Projects' ? '22%' : '6%'}`, transform: `translateX(${linePosition + 1}px)` }}
+                                style={{ width: `${activeTab === 'Your Projects' ? '15%' : activeTab === 'Liked Projects' ? '16%' : '6%'}`, transform: `translateX(${linePosition + 1}px)` }}
                             />
                         </ul>
                     </div>

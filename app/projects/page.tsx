@@ -14,7 +14,7 @@ export default function Projects() {
     setIsOpen(!isOpen);
   };
   return (
-    <article id="__next" className="">
+    <article id="" className="">
       <header className="">
         <NavbarPrincipal />
         <SideNavbar
