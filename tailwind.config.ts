@@ -31,7 +31,14 @@ const config: Config = {
       '4xl': '2.441rem',
       '5xl': '3.052rem',
     },
-      "colors": {
+    extend: {
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+      },
+
+      colors: {
         'primaryv': '#9F00FB',
         'primaryp': '#FC0F5F',
         'blue': '#1fb6ff',
@@ -71,12 +78,6 @@ const config: Config = {
           950: "#040506"
         }
       },
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
-      },
       
       width:
       {
@@ -86,6 +87,7 @@ const config: Config = {
       }
     },
   },
+  
   plugins: [],
 }
 export default config

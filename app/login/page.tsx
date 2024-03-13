@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import {LoginForm} from "../../components/Form";
-import Icons from "../../components/Icons";
+import { LoginForm } from "../../components/Forms";
+import Icons from "../../components/sign-up/Icons";
 
 export default function login() {
   return (
-    <main className="bg-gradient-to-br from-primaryv from-30% via-primaryp to-gray-700 flex justify-around h-screen items-center">
+    <main className="bg-gradient-to-br from-primaryv to-80% to-black flex justify-around h-screen items-center">
       <div className="ml-24 flex flex-col align-middle justify-center">
         <Image
           src={"/img/StartApp-Logo-lg.png"}
@@ -17,7 +17,7 @@ export default function login() {
           Develop Your Dreams
         </h2>
       </div>
-      <article className="bg-gray-700 border-2 border-primaryv p-6 px-10 rounded-lg shadow-2xl items-center">
+      <article className="bg-gray-800 border-2 border-primaryv p-6 px-10 rounded-lg shadow-2xl items-center">
         <section className="flex flex-col justify-center align-middle">
           <div className="flex flex-col float-left align-middle mb-6 font-raleway">
             <Image
@@ -36,7 +36,7 @@ export default function login() {
             </h6>
           </div>
           <div className="flex mt-2 flex-col justify-center align-middle mx-8">
-            <LoginForm/>
+            <LoginForm />
           </div>
         </section>
       </article>

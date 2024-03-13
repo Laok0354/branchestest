@@ -1,0 +1,65 @@
+//request user searchHistory
+GET http://localhost:3000/userData/searchHistory/20
+x-api-key: REYDEREDES
+
+###
+
+GET http://localhost:3000/userData/visitHistory/55
+x-api-key: REYDEREDES
+
+
+###
+
+
+GET http://localhost:3000/userData/getAllProjects
+x-api-key: REYDEREDES
+
+
+###
+
+
+GET http://localhost:3000/auth/check
+Content-Type: application/json
+
+###
+
+GET http://localhost:3000/dbData/skills
+
+
+###
+
+POST http://localhost:3000/recommendations/recommend
+Content-Type: application/json
+
+{
+    "id": 55,
+    "projectsWithAffinities": [
+        {
+            "projectId": 4
+        },
+        {
+            "projectId": 2
+        },
+        {
+            "projectId": 3
+        },
+        {
+            "projectId": 5
+        }
+    ]
+}
+###
+
+DELETE  http://localhost:3000/recommendations/deleteAllRecommendations
+Content-Type: application/json
+
+###
+
+
+
+
+
+
+
+
+

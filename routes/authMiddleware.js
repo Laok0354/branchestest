@@ -1,17 +1,11 @@
 require('dotenv').config();
-const express = require('express'); 
-const router = express.Router();
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 function authenticateToken(req, res, next){
-
-    //const authHeader = req.headers['authorization']
-    //const token = authHeader && authHeader.split(' ')[1]
+    
+    if (req.cookies.accessToken == null || req.cookies.accessToken == undefined) return res.sendStatus(401)
     
     const token = req.cookies.accessToken;
-
-    if (token == null) return res.sendStatus(401)
     
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         
@@ -20,7 +14,7 @@ function authenticateToken(req, res, next){
         console.log(user)
         next()
         
-    } )
+    })
 }
 
 module.exports = authenticateToken;

@@ -8,24 +8,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&family=Poppins&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@600&display=swap');
 
-/* width */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	height: full;
+}
+
 ::-webkit-scrollbar {
 	width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
 	background: #040506;
 	border-radius: 5px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
-	background: #272932;
+	background: #332f2c;
 	border-radius: 5px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
 	background: #040506;
 }
+
+.btn {
+	background-color: blue-500;
+	color: black;
+	font-weight:bold;
+	padding-top:2;
+	padding-bottom:2;
+	padding-left: 4;
+	padding-right: 4;
+	border-radius: 6;
+	transition: 0.3s ease;
+  }
+
+.btn-clicked {
+  background-color: #040506;
+}
+
+
+

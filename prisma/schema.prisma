@@ -9,13 +9,17 @@ datasource db {
 }
 
 model User {
-  id            Int                    @id @default(autoincrement())
-  email         String                 @unique
-  password      String
-  userName      String                 @unique
-  skills        Skill[]
-  refreshTokens RefreshToken[]
-  projects      ProjectCollaborators[]
+  id                    Int                    @id @default(autoincrement())
+  email                 String                 @unique
+  password              String
+  userName              String                 @unique
+  about                 String                 @default("")
+  skills                Skill[]
+  refreshTokens         RefreshToken[]
+  projects              ProjectCollaborators[]
+  likes                 ProjectLike[]
+  recommendedProjects   RecommendedProject[]
+  collaborationRequests CollaborationRequest[]
 }
 
 model Skill {
@@ -34,15 +38,48 @@ model RefreshToken {
 }
 
 model Project {
-  id            Int                    @id @default(autoincrement())
-  name          String                 @unique
-  description   String
-  creatorId     Int
-  createdAt     DateTime               @default(now())
-  updatedAt     DateTime               @updatedAt
-  collaborators ProjectCollaborators[]
+  id                    Int                    @id @default(autoincrement())
+  name                  String                 @unique
+  description           String
+  creatorId             Int
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  statusId              Int                    @default(1)
+  maxMembers            Int                    @default(5)
+  status                status                 @relation(fields: [statusId], references: [id])
+  likes                 ProjectLike[]
+  collaborators         ProjectCollaborators[]
+  recommendedProjects   RecommendedProject[]
+  collaborationRequests CollaborationRequest[]
 
   @@index([creatorId], map: "userIdIndex")
+  @@index([statusId], map: "statusIdIndex")
+}
+
+model RecommendedProject {
+  id        Int      @id @default(autoincrement())
+  projectId Int
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  project   Project  @relation(fields: [projectId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([projectId, userId])
+  @@index([projectId])
+  @@index([userId])
+}
+
+model ProjectLike {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  projectId Int
+  liked     Boolean @default(false)
+  user      User    @relation(fields: [userId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
+
+  @@unique([userId, projectId], map: "userProjectIndex")
+  @@index([projectId])
 }
 
 model ProjectCollaborators {
@@ -54,6 +91,12 @@ model ProjectCollaborators {
 
   @@index([userId], map: "userIdIndex")
   @@index([projectId], map: "projectIdIndex")
+}
+
+model status {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  projects Project[]
 }
 
 model VisitHistory {
@@ -75,6 +118,15 @@ model SearchHistory {
   @@index([userId], map: "userIdIndex")
 }
 
+model userSearchHistory {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  createdAt   DateTime @default(now())
+  searchQuery String
+
+  @@index([userId], map: "userIdIndex")
+}
+
 model SkillToUser {
   A Int
   B Int
@@ -92,6 +144,8 @@ model CollaborationRequest {
   createdAt DateTime @default(now())
   status    String   @default("pending")
   message   String
+  user      User     @relation(fields: [userId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id])
 
   @@index([projectId], map: "projectIdIndex")
   @@index([userId], map: "userIdIndex")

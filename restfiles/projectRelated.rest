@@ -1,0 +1,65 @@
+//create project
+POST http://localhost:3000/project/create
+Authorization: Bearer
+Content-Type: application/json
+
+{
+    "name": "chicken",
+    "description": "pollo",
+    "statusId" :1,
+    "maxMembers": 3
+}
+###
+
+//get project
+GET http://localhost:3000/project/getp/5
+Authorization: Bearer
+Content-Type: application/json
+
+
+###
+
+//modify project
+PUT http://localhost:3000/project/modify/61
+Content-Type: application/json
+
+{
+    "name": "modified wowwww",
+    "description": "modified vigi",
+    "statusId": 4,
+    "maxCollaborators": 4
+}
+###
+
+//delete project
+DELETE http://localhost:3000/project/delete/72
+Authorization: Bearer
+Content-Type: application/json
+
+
+###
+
+//search project
+
+GET http://localhost:3000/search/searchProject/lemur
+Authorization: Bearer
+Content-Type: application/json
+
+###
+
+//get my projects
+
+GET http://localhost:3000/project/getMyProjects
+Authorization: Bearer
+Content-Type: application/json
+
+###
+
+//get recommended projects
+GET http://localhost:3000/recommendations/getRecommended
+Content-Type: application/json
+Authorization: Bearer
+
+###
+
+

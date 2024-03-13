@@ -1,25 +1,47 @@
-import ProjectsScroll from "../../components/ProjectsScroll";
-import SuggestedUsers from "../../components/SuggestedUsers";
-import CreateProject from "@/components/CreateProject";
-import SearchBar from "../../components/SearchBar";
+"use client";
+
+import ProjectsScroll from "../../components/projects/ProjectsScroll";
+import SuggestedUsers from "../../components/projects/SuggestedUsers";
+import CreateProject from "@/components/projects/CreateProject";
+import NavbarPrincipal from '@/components/NavbarPrincipal-SearchBarProjects';
+import SideNavbar from "@/components/SideBar";
+import { useState } from "react";
 
 export default function Projects() {
-    return (
-        <article id="__next">
-            <header>
-                <SearchBar/>
-                <h1 className="text-2xl font-semibold font-raleway my-4">Projects</h1>
-            </header>
-            <section className="flex flex-row justify-around flex-grow align-top">
-                <div>
-                    <ProjectsScroll/>
-                </div>
-                <div className="">
-                    <SuggestedUsers/>
-                    <CreateProject/>
-                </div>
-            </section>
-        </article>
-    );
-}
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
+    const handleOpenNavbar = () => {
+        setIsOpen(!isOpen);
+    }
+
+    const handleSearchResults = (results: []) => {
+      setSearchResults(results);
+    };
+
+  return (
+    <article id="__next" className="">
+      <header className="">
+        <NavbarPrincipal onSearchResults={handleSearchResults}/>
+        <SideNavbar 
+          page="Projects" 
+          isOpen={isOpen}
+          handleOpenNavbar={handleOpenNavbar}
+        />
+      </header>
+      <section className="flex flex-row justify-around items-center flex-grow mt-[6.5rem]">
+        <div className={`mt-4 transition-all duration-700 ${isOpen ? "ml-52" : ""}`}>
+          <ProjectsScroll 
+            searchResults={searchResults}
+            amountColumns={3}
+            className=""
+          />
+        </div>
+        <div className="">
+          <SuggestedUsers />
+          <CreateProject />
+        </div>
+      </section>
+    </article>
+  );
+}

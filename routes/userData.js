@@ -1,18 +1,13 @@
 require('dotenv').config();
-const authenticateToken = require('./authMiddleware');
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
-const { get } = require('http');
 const prisma = new PrismaClient();
-
-router.use(express.json());
-
 const API_KEY = process.env.API_KEY;
 
-router.get ('/searchHistory', async (req, res) => {
+
+
+router.get ('/searchHistory/:uId', async (req, res) => {
 
     try {
 
@@ -24,7 +19,7 @@ router.get ('/searchHistory', async (req, res) => {
 
         const searchHistory = await prisma.searchHistory.findMany({
             where: {
-                userId: req.body.id
+                userId: parseInt(req.params.uId)
             }
         })
 
@@ -45,64 +40,88 @@ router.get ('/searchHistory', async (req, res) => {
     
 });
 
-router.get ('/visitHistory', async(req, res) => {
+router.get ('/userSearchHistory', async (req, res) => {
 
-    try {
-            
-        const apiKey = req.headers['x-api-key'];
+    const apiKey = req.headers['x-api-key'];
 
-        if (apiKey !== API_KEY) {
-            return res.status(401).json({ error: 'Unauthorized' });
+    if (apiKey !== API_KEY) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const searchHistory = await prisma.searchHistory.findMany({
+        where: {
+            userId: req.body.id
         }
+    })
 
-        const visitHistory = await prisma.visitHistory.findMany({
+    if (!searchHistory) {
+        return res.status(404).json({message: "search history not found"});; 
+    }
+
+    let searchQuerys = '';
+
+    searchHistory.forEach((search) => {
+        searchQuerys += search.searchQuery + ' ';
+    })
+
+    res.status(200).json(searchQuerys)
+    
+});
+
+router.get ('/visitHistory/:uId', async(req, res) => {
+            
+    const apiKey = req.headers['x-api-key'];
+
+    if (apiKey !== API_KEY) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const visitHistory = await prisma.visitHistory.findMany({
+        where: {
+            userId: parseInt(req.params.uId)
+        }
+    })
+
+    if (!visitHistory) {
+        return res.status(404).json({message: "visit history not found"});; 
+    }
+
+    const projectPromises = visitHistory.map(async (visit) => {
+        const projects = await prisma.project.findMany({
             where: {
-                userId: req.body.id
+                id: visit.projectId
             }
-        })
-
-        const projectPromises = visitHistory.map(async (visit) => {
-            const projects = await prisma.project.findMany({
-                where: {
-                    id: visit.projectId
-                }
-            });
-
-            return projects.map((project) => project.name);
         });
 
-        const projectNamesArray = await Promise.all(projectPromises);
+        return projects.map((project) => project.name);
+    });
 
-        const visitedProjects = projectNamesArray.flat().join(' ');
+    const projectNamesArray = await Promise.all(projectPromises);
 
-        res.status(200).json(visitedProjects);
+    const visitedProjects = projectNamesArray.flat().join(' ');
 
-
-    } catch (error) {
-        
-        console.log(error);
-        res.status(500).json({error: error})
-
-    }
+    res.status(200).json(visitedProjects);
     
 });
 
 
 router.get('/getAllProjects', async (req, res) => {
-    const apiKey = req.headers['x-api-key'];
     
-    if (apiKey !== API_KEY) {
-        return res.status(401).json({ error: 'Unauthorized' });
+    const projects = await prisma.project.findMany({
+        include: {
+            collaborators: true
+        }}  
+    )
+    
+    if (!projects) {
+        return res.status(404).json({message: "project not found"});; 
     }
+    
+    res.status(200).json(projects);
 
-    try {
-        const projects = await prisma.project.findMany();
-        res.status(200).json(projects);
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error });
-    }
 });
+
+
 
 module.exports = router;
 

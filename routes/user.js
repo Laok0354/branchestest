@@ -9,12 +9,8 @@ const prisma = new PrismaClient();
 
 router.use(express.json());
 
-
-
 router.post('/', async (req, res) => {
     try {
-
-        //check if required fields are empty
 
         if (!req.body.email || !req.body.password || !req.body.userName || !req.body.skillIds) {
             return res.status(400).json({ error: 'One or more required fields are empty' });
@@ -61,6 +57,7 @@ router.post('/', async (req, res) => {
                 email: req.body.email,
                 password: hashedPassword,
                 userName: req.body.userName,
+                about: req.body.about,
                 skills: {
                     connect: req.body.skillIds.map((id) => ({ id })),
                 }
@@ -69,6 +66,7 @@ router.post('/', async (req, res) => {
         res.status(201).send({message: "user created"});
     }
     catch (error) {
+        console.log(error);
         res.status(500).json({ error: error })
     }
 })
@@ -83,15 +81,54 @@ router.get('/', authenticateToken, async (req, res) => {
             id: true,
             email: true,
             userName: true,
+            about: true,
             skills: {
                 select: {
                     name: true
                 }
+            },
+            projects: {
+                select: {
+                    project: {
+                        select: {
+                            name: true
+                        }
+                    }
+                }
             }
-        }
+        },
     })
     res.json(userInfo)
 });
+
+router.get('/getAllUsers', async (req, res) => {
+    
+    try {
+
+        const users = await prisma.user.findMany({
+            include: {
+                projects: {
+                    include: {
+                        project: {
+                            include:  {
+                                likes: true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        res.status(200).json(users);
+
+    } catch (error) {
+
+        console.log(error);
+        res.status(500).json({ error: error });
+
+    }
+})
+
 
 
 

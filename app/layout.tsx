@@ -1,5 +1,4 @@
 import "./globals.css";
-import NavBar from "../components/NavBar";
 
 export default function RootLayout({
   children,
@@ -7,13 +6,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
+    <html className="w-screen h-screen">
       <head>
         <title>StartApp</title>
       </head>
-      <body className="flex bg-gray-800 text-white flex-col">
+      <body className="flex h-[full] w-screen bg-gradient-to-br from-primaryv to-80% to-black text-white flex-col overflow-x-hidden">
         <header>
-          <NavBar/>
+
         </header>
         {children}
       </body>

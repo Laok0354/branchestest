@@ -1,41 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import {SignUpForm} from "../../components/Form";
-import Icons from "../../components/Icons";
-import MultiSelectInput from "../../components/MultiSelectInput";
+import { SignUpForm } from "../../components/Forms";
 
 export default function Signup() {
-  const handleSubmit = async (formData: JSON) => {
-    // Log the form data to the console
-    console.log(formData);
-
-    const request = new Request("/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-  
-    // Send the request.
-    const response = await fetch(request);
-  
-    // Check the status code of the response.
-    if (response.status === 200) {
-      const jsonData = await response.json();
-  
-      // Access the user's form data in the jsonData object.
-      // ...
-    } else {
-      // The request failed.
-      // Handle the error.
-      // ...
-    }
-  };
-
-  return (
-    <main className="bg-gradient-to-br from-primaryv from-30% via-primaryp to-gray-700 flex items-center justify-around">
+  return (    
+    <main className="bg-gradient-to-br from-primaryv to-80% to-black flex items-center justify-around h-screen">
       <div className="flex flex-col align-middle justify-center">
         <Image
           src={"/img/StartApp-Logo-lg.png"}
@@ -47,7 +17,7 @@ export default function Signup() {
           Develop Your Dreams
         </h2>
       </div>
-      <article className="bg-gray-700 border-2 border-primaryv py-6 px-16 rounded-lg shadow-2xl mt-8 mb-8 ">
+      <article className="bg-gray-800 border-2 border-primaryv py-6 px-16 rounded-lg shadow-2xl mt-8 mb-8 ">
         <section className="flex flex-col justify-center align-middle">
           <div className="flex flex-col float-left align-middle mb-6 font-raleway">
             <h2 className="font-medium text-3xl tracking-wide">Sign Up</h2>
@@ -59,8 +29,7 @@ export default function Signup() {
             </h6>
           </div>
           <div className="flex justify-center items-center">
-            {/* Componente Input */}
-            <SignUpForm/>
+            <SignUpForm />
           </div>
         </section>
       </article>
