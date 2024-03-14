@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx nodemon server.js",
     "dev2": "next dev -p 3001",
-    "build": "next build -p 3001",
+    "build": "next build 3001",
     "start": "next start -p 3001",
     "lint": "next lint -p 3001"
   },
