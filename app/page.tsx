@@ -7,10 +7,10 @@ import Footer from "@/components/Footer";
 
 export default function Home () {
   return (
-    <>
+    <main id="__next">
     <header><NavBar page="Home"/></header>
     <section className="pl-24 bg-gradient-to-br from-black from-50% to-primaryv w-full h-[full]">
-      <h1 className="mt-[184px] mb-[27px] flex flex-col w-[838px]text-white text-[70px] justify-center font-semibold text-7xl font-red">Build your own team project</h1>
+      <h1 className="pt-[184px] mb-[27px] flex flex-col w-[838px]text-white text-[70px] justify-center font-semibold text-7xl font-red">Build your own team project</h1>
       <div>
       <p className="mb-[47px] w-[829px] h-[80px] text-white text-[30px]">Connect ideas with people to create starups and unique entrepeneurships.</p>
       </div>
@@ -74,6 +74,6 @@ We have an AI that allows the user's search to be successful. Matching projects 
      </section>
      <Footer/>
     
-    </>
+    </main>
   )
 }

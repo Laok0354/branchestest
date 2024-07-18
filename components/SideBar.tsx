@@ -28,7 +28,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({
         }`}
       >
         <div className="flex justify-end items-baseline">
-          <div className=" flex flex-col top-0 mr-2">
+          <div className=" flex flex-col top-0 mr-2"> 
             <button
               onClick={handleOpenNavbar}
               className="bg-none border-0 cursor-pointer w-[60px] h-[60px] p-0"

@@ -20,7 +20,7 @@ export default function Projects() {
     };
 
   return (
-    <article id="__next" className="">
+    <article id="" className="">
       <header className="">
         <NavbarPrincipal onSearchResults={handleSearchResults}/>
         <SideNavbar 
